@@ -1,6 +1,6 @@
 import { Button } from "../atoms/Button";
 
-export function DownloadCard() {
+export function DownloadCard({ onDownload }) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col justify-between">
       <div>
@@ -20,7 +20,7 @@ export function DownloadCard() {
             HubSpot, Salesforce y Excel corporativo.
           </p>
 
-          <Button>📥 Descargar Excel Limpio (.xlsx)</Button>
+          <Button onClick={onDownload}>📥 Descargar Excel Limpio (.xlsx)</Button>
 
           <div className="grid grid-cols-2 gap-2">
             <button className="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs">

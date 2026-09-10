@@ -6,10 +6,11 @@ import { DownloadCard } from "../components/organisms/DownloadCard";
 import { Footer } from "../components/organisms/Footer";
 import { UseCaseSelector } from "../components/molecules/UseCaseSelector";
 import { MetricCard } from "../components/molecules/MetricCard";
-import { cleanFileBackend } from "../services/api";
+import { cleanFileBackend, downloadExcelBackend } from "../service/api";
 export function Home() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   const [resultData, setResultData] = useState(null);
 
   const handleProcess = async () => {
@@ -24,6 +25,19 @@ export function Home() {
       alert(`Error: ${error.message}`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDownload = async () => {
+    if (!selectedFile) return;
+
+    setDownloading(true);
+    try {
+      await downloadExcelBackend(selectedFile);
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -74,7 +88,7 @@ export function Home() {
           />
 
           <div className="space-y-4">
-            <DownloadCard />
+            <DownloadCard onDownload={handleDownload} />
             {selectedFile && (
               <button
                 onClick={handleProcess}
